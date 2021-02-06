@@ -1,0 +1,5 @@
+# -*- Conf -*-
+
+[wrap-git]
+url = https://github.com/xnscdev/os0-kernel.git
+revision = head

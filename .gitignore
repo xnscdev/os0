@@ -1,4 +1,5 @@
 build
+subprojects/os0-kernel
 
 .DS_Store
 ._*
