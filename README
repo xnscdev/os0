@@ -1,0 +1,45 @@
+This is OS/0, a toy 32-bit operating system for the x86 architecture,
+developed for learning purposes.
+
+This repository is meant to be a central place to store all OS/0 source code
+with the intention of being able to easily produce a working OS/0 installation,
+including the kernel, system libraries, and userspace applications.
+
+To build OS/0, ensure you have the following tools installed at your site:
+
+* A GNU cross-compiler toolchain for the correct target (valid targets are
+  listed as `.conf' files under the `config' directory, currently the only
+  valid target is `i686-pc-elf')
+* The Ninja build system to compile the project
+* The Meson build system to generate build files
+* GNU GRUB 2 targeting `i386-pc' (using EFI targets will not work!)
+
+Create a build directory in the root source directory and enter it:
+
+  mkdir -p -v build
+  cd build
+
+Configure the project using the configuration file for your target (`<file>'
+should be the name of the configuration file, like `i686-pc-elf.conf'):
+
+  meson --cross-file=../<file> ..
+
+Build the kernel and all other programs and libraries:
+
+  ninja
+
+Install everything into the specified destination directory:
+
+  DESTDIR=<DESTDIR> meson install
+
+Be sure to set the `DESTDIR' environment variable correctly, otherwise the
+OS/0 files will be installed on your root filesystem and most likely damage
+your host operating system installation.
+
+The file hierarchy under `<DESTDIR>' will be the system root of the OS/2
+installation. To generate an image of this file and install GRUB, run:
+
+  grub-mkrescue -o os0.iso <DESTDIR>
+
+The resulting `os0.iso' file can now be used in a virtual machine to test
+the operating system.
